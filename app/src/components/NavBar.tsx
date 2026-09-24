@@ -166,6 +166,7 @@ export function NavBar() {
             role="navigation"
             aria-label="Main"
           >
+            {NAV_LINKS.map((link) => {
             {VISIBLE_NAV_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
@@ -379,6 +380,7 @@ export function NavBar() {
               <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest px-2 mb-3">
                 Navigation
               </p>
+              {NAV_LINKS.map((link) => {
               {VISIBLE_NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 const LinkIcon = link.icon;

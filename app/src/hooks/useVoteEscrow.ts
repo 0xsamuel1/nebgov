@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { VoteEscrowClient, VoteEscrowLock, VoteEscrowStats } from "@nebgov/sdk";
-import { parseNetwork } from "../lib/nebgov-env";
 
 export interface UseVoteEscrowResult {
   lock: VoteEscrowLock | null;
@@ -10,7 +9,6 @@ export interface UseVoteEscrowResult {
   stats: VoteEscrowStats | null;
   loading: boolean;
   error: string | null;
-  refetch: () => void;
 }
 
 export function useVoteEscrow(address: string | undefined): UseVoteEscrowResult {
@@ -19,7 +17,6 @@ export function useVoteEscrow(address: string | undefined): UseVoteEscrowResult 
   const [stats, setStats] = useState<VoteEscrowStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [refetchToken, setRefetchToken] = useState(0);
 
   useEffect(() => {
     if (!address) {
@@ -48,7 +45,7 @@ export function useVoteEscrow(address: string | undefined): UseVoteEscrowResult 
           timelockAddress: timelockAddress || "",
           votesAddress: votesAddress || "",
           voteEscrowAddress,
-          network: parseNetwork(process.env.NEXT_PUBLIC_NETWORK),
+          network: (process.env.NEXT_PUBLIC_NETWORK || "testnet") as any,
           rpcUrl: process.env.NEXT_PUBLIC_RPC_URL,
           simulationAccount: process.env.NEXT_PUBLIC_SIMULATION_ACCOUNT,
         });
@@ -80,6 +77,9 @@ export function useVoteEscrow(address: string | undefined): UseVoteEscrowResult 
     return () => {
       cancelled = true;
     };
+  }, [address]);
+
+  return { lock, votingPower, stats, loading, error };
   }, [address, refetchToken]);
 
   const refetch = useCallback(() => setRefetchToken((t) => t + 1), []);
