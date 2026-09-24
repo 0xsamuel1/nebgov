@@ -28,7 +28,7 @@ function computeDecayedPowerPreview(lock: PreviewLock, currentLedger: number): b
 }
 
 export default function VoteEscrowPage() {
-  const { publicKey: pk, connect, signTransaction } = useWallet();
+  const { publicKey, connect } = useWallet();
   const { lock, votingPower, stats, loading, error } = useVoteEscrow(publicKey);
 
   const [amount, setAmount] = useState("");
@@ -54,6 +54,20 @@ export default function VoteEscrowPage() {
         </p>
       </div>
 
+      {!publicKey ? (
+        <div className="rounded-xl border border-indigo-200 bg-indigo-50 p-5 dark:border-indigo-800 dark:bg-slate-900/80">
+          <p className="text-base font-semibold text-slate-900 dark:text-white">
+            Connect your wallet to view or create a vote-escrow lock
+          </p>
+          <button
+            onClick={connect}
+            className="mt-3 inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-indigo-700"
+          >
+            Connect Wallet
+          </button>
+        </div>
+      ) : (
+      <>
       {error && (
         <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-800 dark:border-red-900 dark:bg-red-950 dark:text-red-200">
           <p className="text-sm">{error}</p>
@@ -343,6 +357,8 @@ export default function VoteEscrowPage() {
             </p>
           </div>
         </div>
+      )}
+      </>
       )}
     </div>
   );

@@ -26,7 +26,6 @@ import {
   FastForward,
   Gift,
   Lock,
-  Shield,
   FileText,
 } from "lucide-react";
 import { useTheme } from "../hooks/useTheme";
@@ -48,6 +47,7 @@ function formatGovernanceAmount(v: bigint): string {
 // Route audit: /health is an API-only endpoint (no user page), so it remains intentionally unlinked.
 const NAV_LINKS = [
   { name: "Proposals", href: "/", icon: LayoutDashboard },
+  { name: "Drafts", href: "/drafts", icon: FileText },
   { name: "Conviction", href: "/conviction", icon: Activity },
   { name: "Optimistic", href: "/optimistic", icon: FastForward },
   { name: "Governors", href: "/governors", icon: LayoutDashboard },
