@@ -279,7 +279,7 @@ export function createApp(server: SorobanRpc.Server): express.Application {
   // Swagger documentation
   app.get("/openapi.json", (_req, res) => {
     res.setHeader("Content-Type", "application/json");
-    res.send(generateOpenApiDocument());
+    res.send(generateOpenApiDocument(app));
   });
   app.use("/docs", swaggerUi.serve, swaggerUi.setup(generateOpenApiDocument()));
 
