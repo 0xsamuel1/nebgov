@@ -2376,9 +2376,7 @@ export function subscribeToRecurringStreamExecuted(
 export interface RecurringStreamPausedEventData { streamId: bigint }
 export function parseRecurringStreamPausedEvent(event: SorobanEvent): RecurringStreamPausedEventData | null {
   if (event.topic[0] !== "StrmPaused") return null;
-  const data = eventFields(event.value, ["stream_id"]);
-  if (!data) return null;
-  const streamId = toBigInt(data.stream_id);
+  const streamId = toBigInt(event.topic[1]);
   if (streamId === null) return null;
   return { streamId };
 }
@@ -2396,9 +2394,7 @@ export function subscribeToRecurringStreamPaused(
 export interface RecurringStreamResumedEventData { streamId: bigint }
 export function parseRecurringStreamResumedEvent(event: SorobanEvent): RecurringStreamResumedEventData | null {
   if (event.topic[0] !== "StrmResumed") return null;
-  const data = eventFields(event.value, ["stream_id"]);
-  if (!data) return null;
-  const streamId = toBigInt(data.stream_id);
+  const streamId = toBigInt(event.topic[1]);
   if (streamId === null) return null;
   return { streamId };
 }
