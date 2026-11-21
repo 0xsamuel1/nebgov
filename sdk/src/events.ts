@@ -2117,8 +2117,6 @@ export function subscribeToOptimisticAdminUpdated(
 export interface StrategyRegisteredEventData { strategyId: bigint; adapter: string; token: string }
 export function parseStrategyRegisteredEvent(event: SorobanEvent): StrategyRegisteredEventData | null {
   if (event.topic[0] !== "StratReg") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["strategy_id", "adapter", "token"]);
   if (!data) return null;
   const strategyId = toBigInt(data.strategy_id);
@@ -2143,8 +2141,6 @@ export function subscribeToStrategyRegistered(
 export interface StrategyDeactivatedEventData { strategyId: bigint }
 export function parseStrategyDeactivatedEvent(event: SorobanEvent): StrategyDeactivatedEventData | null {
   if (event.topic[0] !== "StratDeact") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["strategy_id"]);
   if (!data) return null;
   const strategyId = toBigInt(data.strategy_id);
@@ -2165,8 +2161,6 @@ export function subscribeToStrategyDeactivated(
 export interface StrategyDepositedEventData { strategyId: bigint; amount: bigint }
 export function parseStrategyDepositedEvent(event: SorobanEvent): StrategyDepositedEventData | null {
   if (event.topic[0] !== "Deposited") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["strategy_id", "amount"]);
   if (!data) return null;
   const strategyId = toBigInt(data.strategy_id);
@@ -2189,8 +2183,6 @@ export function subscribeToStrategyDeposited(
 export interface StrategyWithdrawalRequestedEventData { withdrawalId: bigint; strategyId: bigint; amount: bigint; claimableLedger: number }
 export function parseStrategyWithdrawalRequestedEvent(event: SorobanEvent): StrategyWithdrawalRequestedEventData | null {
   if (event.topic[0] !== "WdrawReq") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["withdrawal_id", "strategy_id", "amount", "claimable_ledger"]);
   if (!data) return null;
   const withdrawalId = toBigInt(data.withdrawal_id);
@@ -2217,8 +2209,6 @@ export function subscribeToStrategyWithdrawalRequested(
 export interface StrategyWithdrawalClaimedEventData { withdrawalId: bigint; actualAmount: bigint }
 export function parseStrategyWithdrawalClaimedEvent(event: SorobanEvent): StrategyWithdrawalClaimedEventData | null {
   if (event.topic[0] !== "WdrawClaim") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["withdrawal_id", "actual_amount"]);
   if (!data) return null;
   const withdrawalId = toBigInt(data.withdrawal_id);
@@ -2241,8 +2231,6 @@ export function subscribeToStrategyWithdrawalClaimed(
 export interface BondLockedEventData { proposer: string; descriptionHash: unknown; amount: bigint }
 export function parseBondLockedEvent(event: SorobanEvent): BondLockedEventData | null {
   if (event.topic[0] !== "BondLocked") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["description_hash", "amount"]);
   if (!data) return null;
   if (typeof event.topic[1] !== "string") return null;
@@ -2266,8 +2254,6 @@ export function subscribeToBondLocked(
 export interface BondRefundedEventData { proposer: string; descriptionHash: unknown; amount: bigint }
 export function parseBondRefundedEvent(event: SorobanEvent): BondRefundedEventData | null {
   if (event.topic[0] !== "BondRefunded") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["description_hash", "amount"]);
   if (!data) return null;
   if (typeof event.topic[1] !== "string") return null;
@@ -2291,8 +2277,6 @@ export function subscribeToBondRefunded(
 export interface BondSlashedEventData { proposer: string; descriptionHash: unknown; amount: bigint; recipient: string }
 export function parseBondSlashedEvent(event: SorobanEvent): BondSlashedEventData | null {
   if (event.topic[0] !== "BondSlashed") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["description_hash", "amount", "recipient"]);
   if (!data) return null;
   if (typeof event.topic[1] !== "string") return null;
@@ -2318,8 +2302,6 @@ export function subscribeToBondSlashed(
 export interface BondAmountUpdatedEventData { admin: string; oldAmount: bigint; newAmount: bigint }
 export function parseBondAmountUpdatedEvent(event: SorobanEvent): BondAmountUpdatedEventData | null {
   if (event.topic[0] !== "BondAmountUpdated") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["old_amount", "new_amount"]);
   if (!data) return null;
   if (typeof event.topic[1] !== "string") return null;
@@ -2344,8 +2326,6 @@ export function subscribeToBondAmountUpdated(
 export interface RecurringStreamCreatedEventData { streamId: bigint; recipient: string; amountPerInterval: bigint; intervalLedgers: number }
 export function parseRecurringStreamCreatedEvent(event: SorobanEvent): RecurringStreamCreatedEventData | null {
   if (event.topic[0] !== "StrmCreated") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["stream_id", "recipient", "amount_per_interval", "interval_ledgers"]);
   if (!data) return null;
   const streamId = toBigInt(data.stream_id);
@@ -2372,8 +2352,6 @@ export function subscribeToRecurringStreamCreated(
 export interface RecurringStreamExecutedEventData { streamId: bigint; amount: bigint; executedAtLedger: number }
 export function parseRecurringStreamExecutedEvent(event: SorobanEvent): RecurringStreamExecutedEventData | null {
   if (event.topic[0] !== "StrmExec") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["stream_id", "amount", "executed_at_ledger"]);
   if (!data) return null;
   const streamId = toBigInt(data.stream_id);
@@ -2398,8 +2376,6 @@ export function subscribeToRecurringStreamExecuted(
 export interface RecurringStreamPausedEventData { streamId: bigint }
 export function parseRecurringStreamPausedEvent(event: SorobanEvent): RecurringStreamPausedEventData | null {
   if (event.topic[0] !== "StrmPaused") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["stream_id"]);
   if (!data) return null;
   const streamId = toBigInt(data.stream_id);
@@ -2420,8 +2396,6 @@ export function subscribeToRecurringStreamPaused(
 export interface RecurringStreamResumedEventData { streamId: bigint }
 export function parseRecurringStreamResumedEvent(event: SorobanEvent): RecurringStreamResumedEventData | null {
   if (event.topic[0] !== "StrmResumed") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["stream_id"]);
   if (!data) return null;
   const streamId = toBigInt(data.stream_id);
@@ -2442,8 +2416,6 @@ export function subscribeToRecurringStreamResumed(
 export interface RecurringStreamCancelledEventData { streamId: bigint; totalStreamed: bigint }
 export function parseRecurringStreamCancelledEvent(event: SorobanEvent): RecurringStreamCancelledEventData | null {
   if (event.topic[0] !== "StrmCancel") return null;
-  const id = toBigInt(event.topic[1]);
-  if (id === null) return null;
   const data = eventFields(event.value, ["stream_id", "total_streamed"]);
   if (!data) return null;
   const streamId = toBigInt(data.stream_id);
